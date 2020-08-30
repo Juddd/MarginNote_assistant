@@ -1,7 +1,7 @@
 import sys
 from unicodedata import normalize
 import clipboard as cl
-from PyQt5.QtWidgets import QApplication,QSystemTrayIcon,QDialog,QMenu,qApp,QWidget
+from PyQt5.QtWidgets import QApplication,QSystemTrayIcon,QDialog,QMenu,qApp
 from PyQt5.QtGui import QIcon
 
 import json
@@ -32,6 +32,11 @@ class MyWidget(QSystemTrayIcon):
         self.clipboard = QApplication.clipboard()
         self.clipboard.dataChanged.connect(self.fun)
 
+        self.activated.connect(self.onTrayIconActivated)
+
+    def onTrayIconActivated(self, reason):
+        if reason == QSystemTrayIcon.DoubleClick:
+            self.show_dialog()
 
     def fun(self):
         if self.clipboard.mimeData().hasText():
@@ -67,10 +72,14 @@ class MyWidget(QSystemTrayIcon):
 
 
     def setting(self):
+        self.show_dialog()
+
+
+    def show_dialog(self):
         status = self.list_replace_gui.exec()
         if status == QDialog.Accepted:
             self.re_list=self.list_replace_gui.getTableContent()
-            # print(self.re_list)
+        # print(self.re_list)
 
 
     def exit(self):

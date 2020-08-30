@@ -16,7 +16,7 @@ class QmyListPlace(QDialog):
         self.ui.setupUi(self)
 
         self.setWindowTitle("配置字符串替换列表")
-        self.setWindowFlags(Qt.MSWindowsFixedSizeDialogHint)
+        self.setWindowFlags(Qt.MSWindowsFixedSizeDialogHint | Qt.WindowStaysOnTopHint )
         self.itemModel=QStandardItemModel(5,3,self)
 
         self.itemModel.setHorizontalHeaderLabels(["原字符","新字符","是否启用"])
