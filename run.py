@@ -21,16 +21,19 @@ class MyWidget(QSystemTrayIcon):
         exitAction.triggered.connect(self.exit)
         self.setIcon(QIcon(":images/img/tray_logo.png"))
         self.setContextMenu(menu)
-        self.setToolTip("修正从MarginNote脑图中复制出来的汉字编码")
-        self.showMessage("Message", "Running!")
 
-        self.re_list=None
+
         self.list_replace=QmyListPlace()
-        self.dialog=QDialog()
-        self.list_replace.ui.setupUi(self.dialog)
+        dialog=QDialog()
+        self.list_replace.ui.setupUi(dialog)
+
+        self.re_list=self.list_replace.getTableContent()
 
         self.clipboard = QApplication.clipboard()
         self.clipboard.dataChanged.connect(self.fun)
+
+        self.setToolTip("修正从MarginNote脑图中复制出来的汉字编码")
+        self.showMessage("Message", "Running!")
 
 
     def fun(self):
@@ -49,7 +52,6 @@ class MyWidget(QSystemTrayIcon):
 
     def setting(self):
         status = self.list_replace.exec()
-
         if status == QDialog.Accepted:
             self.re_list=self.list_replace.getTableContent()
 
