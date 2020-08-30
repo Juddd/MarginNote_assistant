@@ -73,10 +73,10 @@ class QmyListPlace(QDialog):
             self.itemModel.removeRow(curIndex.row())  # 删除当前行
 
     def getTableContent(self):
-        list_replace=[]
+        list_replace={}
         for i in range(self.itemModel.rowCount()):
             if self.itemModel.item(i,2).checkState():
-                list_replace.append([self.itemModel.item(i,0).text(),self.itemModel.item(i,1).text()])
+                list_replace[self.itemModel.item(i,0).text()]=self.itemModel.item(i,1).text()
         # print(list_replace)
         return list_replace
 
