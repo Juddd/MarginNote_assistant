@@ -61,7 +61,8 @@ class QmyListPlace(QDialog):
             item = QStandardItem(self.__lastColumnTitle)  # 最后一列
             item.setFlags(self.__lastColumnFlags)
             item.setCheckable(True)
-            item.setCheckState(value["used"])
+            status=Qt.Checked if value["used"] else Qt.Unchecked
+            item.setCheckState(status)
 
             # item.setTextAlignment(Qt.AlignHCenter)
             self.itemModel.setItem(i,2,item)
@@ -102,7 +103,7 @@ class QmyListPlace(QDialog):
     def getTableContent(self):
         list_replace={}
         for i in range(self.itemModel.rowCount()):
-            list_replace[self.itemModel.item(i, 0).text()]={"string":self.itemModel.item(i, 1).text(),"used":bool(self.itemModel.item(i,2).checkState())}
+            list_replace[self.itemModel.item(i, 0).text()]={"string":self.itemModel.item(i, 1).text(),"used":self.itemModel.item(i,2).checkState() == Qt.Checked}
         return list_replace
 
 
