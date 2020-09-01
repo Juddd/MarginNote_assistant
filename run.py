@@ -28,9 +28,17 @@ class MyWidget(QSystemTrayIcon):
 
         menu=QMenu()
         #开机自启按扭
+        #配置开机自启注册表路径
+        self.startup_var=QSettings(variable.RUN_PATH, QSettings.NativeFormat)
+        # if not(self.startup_var.contains("Amend_clipboard")):
+        #     self.startup_var.setValue("un_valid", sys.argv[0])
+
+
         startupAction=menu.addAction("开机自启")
+
+
         startupAction.setCheckable(True)
-        startupAction.setChecked(True)
+        startupAction.setChecked(self.startup_var.contains("Amend_clipboard"))
         startupAction.triggered.connect(self.app_startup)
         menu.addSeparator()
         #设置是否禁用剪贴板监控
@@ -59,8 +67,7 @@ class MyWidget(QSystemTrayIcon):
         self.clipboard = QApplication.clipboard()
         self.clipboard.dataChanged.connect(self.fun)
 
-        #配置开机自启注册表路径
-        self.startup_var=QSettings(variable.RUN_PATH, QSettings.NativeFormat)
+
 
 
         self.activated.connect(self.onTrayIconActivated)
