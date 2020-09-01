@@ -1,4 +1,3 @@
 import json
 
-a=1
-print(bool(True))
+print(any([True, False]))

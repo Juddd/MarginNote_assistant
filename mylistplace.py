@@ -46,7 +46,9 @@ class QmyListPlace(QDialog):
         self.regSettings=QSettings("zyd","Amend_clipboard")
         if not(self.regSettings.contains("chkBox_html")):
             self.regSettings.setValue("chkBox_html",0)
-        self.ui.chkBox_html.setChecked(self.regSettings.value("chkBox_html")==1)
+        self.ui.chkBox_html.setChecked(Qt.Checked if self.regSettings.value("chkBox_html")==1 else Qt.Unchecked)
+
+
 
         i=0
         for key,value in self.__init_dic.items():
@@ -70,6 +72,22 @@ class QmyListPlace(QDialog):
 
         # self.itemModel.item(0,0).setData("这是一个换行符",Qt.ToolTipRole)
         # self.itemModel.item(1,0).setData("这是一个空格",Qt.ToolTipRole)
+
+        #配置全选按扭
+        if not(self.regSettings.contains("chk_all")):
+            current_status=[v["used"] for k,v in self.__init_dic.items()]
+            if all(current_status):#全选
+                self.ui.chk_all.setCheckState(Qt.Checked)
+                self.regSettings.setValue("chk_all", Qt.Checked)
+            else:#没有一个被选
+                self.ui.chk_all.setCheckState(Qt.Unchecked)
+                self.regSettings.setValue("chk_all", Qt.Unchecked)
+        else:
+            if self.regSettings.value("chk_all")==Qt.Unchecked:
+                self.ui.chk_all.setCheckState(Qt.Unchecked)
+            else:
+                self.ui.chk_all.setCheckState(Qt.Checked)
+
 
     def on_append_row_released(self):
         itemlist = []  # QStandardItem 对象列表
@@ -99,6 +117,19 @@ class QmyListPlace(QDialog):
             self.regSettings.setValue("chkBox_html", 1)
         else:
             self.regSettings.setValue("chkBox_html", 0)
+
+    #chk_all变量中0为全不选，1为部分选,2为全选，
+    @pyqtSlot(bool)
+    def on_chk_all_clicked(self,qcheck):
+        if qcheck:
+            self.regSettings.setValue("chk_all", Qt.Checked)
+            for i in range(self.itemModel.rowCount()):
+                self.itemModel.item(i,2).setCheckState(Qt.Checked)
+        else:
+            self.regSettings.setValue("chk_all", Qt.Unchecked)
+            for i in range(self.itemModel.rowCount()):
+                self.itemModel.item(i,2).setCheckState(Qt.Unchecked)
+
 
     def getTableContent(self):
         list_replace={}
