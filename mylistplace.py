@@ -23,6 +23,7 @@ class QmyListPlace(QDialog):
             with open("assistant_config.ini", 'r') as fp:
                 self.__init_dic = json.load(fp)
 
+
         self.ui=Ui_ListReplace()
         self.ui.setupUi(self)
 
@@ -101,8 +102,7 @@ class QmyListPlace(QDialog):
     def getTableContent(self):
         list_replace={}
         for i in range(self.itemModel.rowCount()):
-            list_replace[self.itemModel.item(i, 0).text()]={"string":self.itemModel.item(i, 1).text(),"used":self.itemModel.item(i,2).checkState()}
-        # print(list_replace)
+            list_replace[self.itemModel.item(i, 0).text()]={"string":self.itemModel.item(i, 1).text(),"used":bool(self.itemModel.item(i,2).checkState())}
         return list_replace
 
 
