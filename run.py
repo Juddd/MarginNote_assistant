@@ -94,16 +94,28 @@ class MyWidget(QSystemTrayIcon):
         if self.regSettings.value("un_valid")==0:
             text = self.clipboard.text()
             if self.clipboard.mimeData().hasText() and not(self.clipboard.mimeData().hasHtml()) and not(self.clipboard.mimeData().hasImage()):
-                tmp = normalize("NFKC", text)
+                # tmp = normalize("NFKC", text)
 
                 #处理编码问题
-                processed = "".join([variable.pattern[x] if x in variable.pattern else x for x in list(tmp)])
-                comparison = {a: b for a, b in zip(list(text), list(processed)) if a != b}
+                processed=""
+                comparison={}
+                for i in list(text):
+                    if b'\\u4E00' <= i.encode("unicode-escape") <= b'\\u9FA5':
+                        tmp_c = normalize("NFKC", i)
+                        processed += tmp_c
+                        if i != tmp_c:
+                            comparison[i] = tmp_c
+                    else:
+                        processed += i
+
+                # processed = "".join([variable.pattern[x] if x in variable.pattern else x for x in list(tmp)])
+                # comparison = {a: b for a, b in zip(list(text), list(processed)) if a != b}
 
                 #处理英文逗号后面可能带空格的问题
                 if "," in self.re_list:
                     processed = re.sub(", +",",",processed)
 
+                # print("self.re_list:",self.re_list)
                 #处理整个对话框列表的问题
                 result=""
                 for x in list(processed):
