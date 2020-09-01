@@ -49,3 +49,5 @@ pattern = {
     "⻲": "亀",
     "⻳": "龟"
 }
+
+RUN_PATH = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run"

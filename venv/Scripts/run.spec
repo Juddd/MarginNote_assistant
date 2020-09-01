@@ -30,4 +30,4 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=True , icon='D:\\programme\\python\\修正剪贴板汉字\\ico.ico')
+          console=False , icon='D:\\programme\\python\\修正剪贴板汉字\\ico.ico')
