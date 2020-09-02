@@ -96,7 +96,7 @@ class MyWidget(QSystemTrayIcon):
         if self.regSettings.value("un_valid")==0:
             text = self.clipboard.text()
             # variable.radicals.update(variable)
-            if self.clipboard.mimeData().hasText() and not(self.clipboard.mimeData().hasHtml()) and not(self.clipboard.mimeData().hasImage()):
+            if self.clipboard.mimeData().hasText() and and not(self.clipboard.mimeData().hasImage()):
                 # tmp = normalize("NFKC", text)
 
                 #处理编码问题
@@ -134,7 +134,7 @@ class MyWidget(QSystemTrayIcon):
                     self.showMessage("替换列表：", json.dumps(comparison, ensure_ascii=False))
                 # print(text)
                 # print(new_tex)
-            if self.regSettings.value("chkBox_html")==1 and self.clipboard.mimeData().hasHtml() and not(self.clipboard.mimeData().hasImage()):
+            if self.regSettings.value("chkBox_html")==1 and not(self.clipboard.mimeData().hasImage()):
                 cl.copy(self.clipboard.text())
                 self.showMessage("提醒!","html已转plain")
 
