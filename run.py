@@ -132,6 +132,7 @@ class MyWidget(QSystemTrayIcon):
                 # print(new_tex)
             if self.regSettings.value("chkBox_html")==1 and self.clipboard.mimeData().hasHtml() and not(self.clipboard.mimeData().hasImage()):
                 cl.copy(self.clipboard.text())
+                self.showMessage("提醒!","html已转plain")
 
 
     def setting(self):

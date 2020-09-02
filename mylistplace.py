@@ -74,19 +74,13 @@ class QmyListPlace(QDialog):
         # self.itemModel.item(1,0).setData("这是一个空格",Qt.ToolTipRole)
 
         #配置全选按扭
-        if not(self.regSettings.contains("chk_all")):
-            current_status=[v["used"] for k,v in self.__init_dic.items()]
-            if all(current_status):#全选
-                self.ui.chk_all.setCheckState(Qt.Checked)
-                self.regSettings.setValue("chk_all", Qt.Checked)
-            else:#没有一个被选
-                self.ui.chk_all.setCheckState(Qt.Unchecked)
-                self.regSettings.setValue("chk_all", Qt.Unchecked)
-        else:
-            if self.regSettings.value("chk_all")==Qt.Unchecked:
-                self.ui.chk_all.setCheckState(Qt.Unchecked)
-            else:
-                self.ui.chk_all.setCheckState(Qt.Checked)
+        current_status = [v["used"] for k,v in self.__init_dic.items()]
+        if all(current_status):#全选
+            self.ui.chk_all.setCheckState(Qt.Checked)
+            self.regSettings.setValue("chk_all", Qt.Checked)
+        else:#没有一个被选
+            self.ui.chk_all.setCheckState(Qt.Unchecked)
+            self.regSettings.setValue("chk_all", Qt.Unchecked)
 
 
     def on_append_row_released(self):
