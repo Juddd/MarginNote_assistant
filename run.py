@@ -83,7 +83,7 @@ class MyWidget(QSystemTrayIcon):
 
     def onTrayIconActivated(self, reason):
         if reason == QSystemTrayIcon.DoubleClick:
-            self.show_dialog()
+            self.setting()
 
     @pyqtSlot(bool)
     def app_startup(self,qstart):
@@ -97,22 +97,10 @@ class MyWidget(QSystemTrayIcon):
             text = self.clipboard.text()
             # variable.radicals.update(variable)
             if self.clipboard.mimeData().hasText() and not(self.clipboard.mimeData().hasImage()):
-                # tmp = normalize("NFKC", text)
 
                 #处理编码问题
                 processed = "".join([self.re_list_han[x] if x in self.re_list_han else x for x in list(text)])
                 comparison = {a: b for a, b in zip(list(text), list(processed)) if a != b}
-
-                # for i in list(processed):
-                #     if (i not in self.punctuation and not(b'\\u4E00' <= i.encode("unicode-escape") <= b'\\u9FA5')):
-                #         tmp_c = normalize("NFKC", i)
-                #         processed += tmp_c
-                #         if i != tmp_c:
-                #             comparison[i] = tmp_c
-                #     else:
-                #         processed += i
-
-
 
                 #处理英文逗号后面可能带空格的问题
                 if "," in self.re_list:
@@ -140,15 +128,8 @@ class MyWidget(QSystemTrayIcon):
 
 
     def setting(self):
-        self.show_dialog()
-
-
-    def show_dialog(self):
-
         self.list_replace_gui=QmyListPlace()
-
         self.re_dic=self.list_replace_gui.getTableContent()
-
         self.re_list={k:v["string"] for k,v in self.re_dic.items() if v["used"]}
 
         status = self.list_replace_gui.exec()
