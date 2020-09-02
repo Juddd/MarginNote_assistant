@@ -18,6 +18,8 @@ class MyWidget(QSystemTrayIcon):
     def __init__(self):
         super().__init__()
 
+        self.punctuation=set("，、？：！（）")
+
         self.regSettings=QSettings("zyd","Amend_clipboard")
         if not(self.regSettings.contains("un_valid")):
             self.regSettings.setValue("un_valid",0)
@@ -58,18 +60,15 @@ class MyWidget(QSystemTrayIcon):
         self.list_replace_gui=QmyListPlace()
 
         self.re_dic=self.list_replace_gui.getTableContent()
-        with open("assistant_config.ini", 'w') as fp:
-            json.dump(self.re_dic, fp, ensure_ascii=False)
+        # with open("assistant_config.ini", 'w') as fp:
+        #     json.dump(self.re_dic, fp, ensure_ascii=False)
 
         self.re_list={k:v["string"] for k,v in self.re_dic.items() if v["used"]}
 
 
         self.clipboard = QApplication.clipboard()
         self.clipboard.dataChanged.connect(self.fun)
-
-
-
-
+        #关联双击托盘动作
         self.activated.connect(self.onTrayIconActivated)
 
     @pyqtSlot(bool)
@@ -100,7 +99,7 @@ class MyWidget(QSystemTrayIcon):
                 processed=""
                 comparison={}
                 for i in list(text):
-                    if b'\\u4E00' <= i.encode("unicode-escape") <= b'\\u9FA5':
+                    if (i not in self.punctuation and not(b'\\u4E00' <= i.encode("unicode-escape") <= b'\\u9FA5')):
                         tmp_c = normalize("NFKC", i)
                         processed += tmp_c
                         if i != tmp_c:
@@ -140,6 +139,13 @@ class MyWidget(QSystemTrayIcon):
 
 
     def show_dialog(self):
+
+        self.list_replace_gui=QmyListPlace()
+
+        self.re_dic=self.list_replace_gui.getTableContent()
+
+        self.re_list={k:v["string"] for k,v in self.re_dic.items() if v["used"]}
+
         status = self.list_replace_gui.exec()
         if status == QDialog.Accepted:
             self.re_dic = self.list_replace_gui.getTableContent()

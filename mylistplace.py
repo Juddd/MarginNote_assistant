@@ -39,7 +39,7 @@ class QmyListPlace(QDialog):
 
         self.a=1
         self.__lastColumnTitle = "启用"
-        self.__lastColumnFlags = (Qt.ItemIsSelectable | Qt.ItemIsUserCheckable | Qt.ItemIsEnabled)
+        self.__lastColumnFlags = ( Qt.ItemIsUserCheckable | Qt.ItemIsEnabled)
         self.ui.tableView.setAlternatingRowColors(True)
         self.ui.tableView.setColumnWidth(2,55)
 
