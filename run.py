@@ -96,7 +96,7 @@ class MyWidget(QSystemTrayIcon):
         if self.regSettings.value("un_valid")==0:
             text = self.clipboard.text()
             # variable.radicals.update(variable)
-            if self.clipboard.mimeData().hasText() and and not(self.clipboard.mimeData().hasImage()):
+            if self.clipboard.mimeData().hasText() and not(self.clipboard.mimeData().hasImage()):
                 # tmp = normalize("NFKC", text)
 
                 #处理编码问题
