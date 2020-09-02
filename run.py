@@ -18,7 +18,9 @@ class MyWidget(QSystemTrayIcon):
     def __init__(self):
         super().__init__()
 
-        self.punctuation=set("，、？：！（）")
+        self.re_list_han=variable.radicals
+        self.re_list_han.update(variable.supplement)
+        # self.punctuation=set("，、？：！（）")
 
         self.regSettings=QSettings("zyd","Amend_clipboard")
         if not(self.regSettings.contains("un_valid")):
@@ -63,6 +65,7 @@ class MyWidget(QSystemTrayIcon):
         # with open("assistant_config.ini", 'w') as fp:
         #     json.dump(self.re_dic, fp, ensure_ascii=False)
 
+        #来源于对话框的替换列表
         self.re_list={k:v["string"] for k,v in self.re_dic.items() if v["used"]}
 
 
@@ -92,23 +95,24 @@ class MyWidget(QSystemTrayIcon):
     def fun(self):
         if self.regSettings.value("un_valid")==0:
             text = self.clipboard.text()
+            # variable.radicals.update(variable)
             if self.clipboard.mimeData().hasText() and not(self.clipboard.mimeData().hasHtml()) and not(self.clipboard.mimeData().hasImage()):
                 # tmp = normalize("NFKC", text)
 
                 #处理编码问题
-                processed=""
-                comparison={}
-                for i in list(text):
-                    if (i not in self.punctuation and not(b'\\u4E00' <= i.encode("unicode-escape") <= b'\\u9FA5')):
-                        tmp_c = normalize("NFKC", i)
-                        processed += tmp_c
-                        if i != tmp_c:
-                            comparison[i] = tmp_c
-                    else:
-                        processed += i
+                processed = "".join([self.re_list_han[x] if x in self.re_list_han else x for x in list(text)])
+                comparison = {a: b for a, b in zip(list(text), list(processed)) if a != b}
 
-                # processed = "".join([variable.pattern[x] if x in variable.pattern else x for x in list(tmp)])
-                # comparison = {a: b for a, b in zip(list(text), list(processed)) if a != b}
+                # for i in list(processed):
+                #     if (i not in self.punctuation and not(b'\\u4E00' <= i.encode("unicode-escape") <= b'\\u9FA5')):
+                #         tmp_c = normalize("NFKC", i)
+                #         processed += tmp_c
+                #         if i != tmp_c:
+                #             comparison[i] = tmp_c
+                #     else:
+                #         processed += i
+
+
 
                 #处理英文逗号后面可能带空格的问题
                 if "," in self.re_list:

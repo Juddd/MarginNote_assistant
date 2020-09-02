@@ -1,15 +1,12 @@
 import json
 from unicodedata import normalize
+import variable
 
-punctuation="，、？：！（）"
-print(set(punctuation))
-# processed = normalize("NFKC", s)
-# print(s,processed,sep="\n")
+# for k,v in variable.part.items():
+#     proc=normalize("NFKC", k)
+#     if proc != v:
+#         print(k,k.encode("unicode-escape"),":",v,v.encode("unicode-escape"))
 
-# print(b'\\u4E00'<=",".encode("unicode-escape")<=b'\\u9FA5')
-
-# print(b'\\u9FA5'.decode("unicode-escape"))
-
-# aaa="，"
-# print(s.encode("unicode-escape"))
-# print(processed.encode("unicode-escape"))
+print(variable.radicals.__len__())
+variable.radicals.update(variable.supplement)
+print(variable.radicals.__len__())
