@@ -148,6 +148,9 @@ class MyWidget(QSystemTrayIcon):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     app.setQuitOnLastWindowClosed(False)
+    app.setApplicationVersion("1.14")
+    app.setApplicationName("Amend_clipboard")
+    app.setOrganizationName("zyd")
 
     myWidget=MyWidget()
     myWidget.show()
