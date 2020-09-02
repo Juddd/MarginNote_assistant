@@ -1,5 +1,6 @@
 RUN_PATH = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run"
 
+#https://www.unicode.org/charts/nameslist/n_2E80.html
 supplement = {
 	"⼞": "口",
     "⺒": "巳",
@@ -52,7 +53,7 @@ supplement = {
     "⻳": "龟"
 }
 
-#源https://github.com/furuiyang0715/spider_notes/blob/master/codes/kangxi.json
+#https://github.com/furuiyang0715/spider_notes/blob/master/codes/kangxi.json
 radicals={
     "⼀": "一",
     "⼄": "乙",
@@ -172,7 +173,7 @@ radicals={
     "⾥": "里",
     "⾦": "金",
     "⾧": "长",
-    "⾨": "门",
+    "⻔": "门",
     "⾩": "阜",
     "⾪": "隶",
     "⾬": "雨",
