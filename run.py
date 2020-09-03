@@ -11,7 +11,10 @@ import imgs_rc
 import variable
 import re
 
+
+
 from mylistplace import QmyListPlace
+
 
 class MyWidget(QSystemTrayIcon):
     #注册表中un_valid为0则停用全局禁止，为1则启用
@@ -70,6 +73,10 @@ class MyWidget(QSystemTrayIcon):
 
 
         self.clipboard = QApplication.clipboard()
+
+        self.last_text=None
+
+
         self.clipboard.dataChanged.connect(self.fun)
         #关联双击托盘动作
         self.activated.connect(self.onTrayIconActivated)
@@ -95,9 +102,9 @@ class MyWidget(QSystemTrayIcon):
     def fun(self):
         if self.regSettings.value("un_valid")==0:
             text = self.clipboard.text()
+            result_text = ""
             # variable.radicals.update(variable)
-            if self.clipboard.mimeData().hasText() and not(self.clipboard.mimeData().hasImage()):
-
+            if self.clipboard.mimeData().hasText() and not(self.clipboard.mimeData().hasImage()) and self.last_text != text:
                 #处理编码问题
                 processed = "".join([self.re_list_han[x] if x in self.re_list_han else x for x in list(text)])
                 comparison = {a: b for a, b in zip(list(text), list(processed)) if a != b}
@@ -108,22 +115,24 @@ class MyWidget(QSystemTrayIcon):
 
                 # print("self.re_list:",self.re_list)
                 #处理整个对话框列表的问题
-                result=""
                 for x in list(processed):
                     if x in self.re_list:
-                        result+=self.re_list[x]
+                        result_text+=self.re_list[x]
                         comparison[x]=self.re_list[x]
                     else:
-                        result+=x
+                        result_text+=x
+                self.last_text = result_text
 
-                if text != result:
-                    cl.copy(result)
-                    # comparison = {a: b for a, b in zip(list(text), list(result)) if a != b}
+
+                if text != result_text:
+                    cl.copy(result_text)
+                    comparison = {a: b for a, b in zip(list(text), list(result_text)) if a != b}
                     self.showMessage("替换列表：", json.dumps(comparison, ensure_ascii=False))
+
                 # print(text)
                 # print(new_tex)
-            if self.regSettings.value("chkBox_html")==1 and not(self.clipboard.mimeData().hasImage()):
-                cl.copy(self.clipboard.text())
+            if self.regSettings.value("chkBox_html")==1 and not(self.clipboard.mimeData().hasImage()) and self.clipboard.mimeData().hasHtml():
+                cl.copy(text)
                 self.showMessage("提醒!","html已转plain")
 
 
@@ -148,7 +157,7 @@ class MyWidget(QSystemTrayIcon):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     app.setQuitOnLastWindowClosed(False)
-    app.setApplicationVersion("1.18")
+    app.setApplicationVersion("1.19")
     app.setApplicationName("Amend_clipboard")
     app.setOrganizationName("zyd")
 
