@@ -123,16 +123,16 @@ class MyWidget(QSystemTrayIcon):
                         result_text+=x
                 self.last_text = result_text
 
-
+                print("cc")
                 if text != result_text:
                     cl.copy(result_text)
-                    comparison = {a: b for a, b in zip(list(text), list(result_text)) if a != b}
                     self.showMessage("替换列表：", json.dumps(comparison, ensure_ascii=False))
 
                 # print(text)
                 # print(new_tex)
             if self.regSettings.value("chkBox_html")==1 and not(self.clipboard.mimeData().hasImage()) and self.clipboard.mimeData().hasHtml():
                 cl.copy(text)
+                print("a")
                 self.showMessage("提醒!","html已转plain")
 
 
