@@ -11,6 +11,23 @@ import imgs_rc
 import variable
 import re
 
+import win32clipboard as wc
+import win32con
+
+
+def get_text():
+    """ 读取 """
+    wc.OpenClipboard()
+    text = wc.GetClipboardData()
+    wc.CloseClipboard()
+    return text
+
+
+def set_text(strs):
+    """ 写入 """
+    wc.OpenClipboard()
+    wc.EmptyClipboard()
+    wc.SetClipboardData(strs)
 
 
 from mylistplace import QmyListPlace
@@ -123,16 +140,16 @@ class MyWidget(QSystemTrayIcon):
                         result_text+=x
                 self.last_text = result_text
 
-                print("cc")
+                # print("cc")
                 if text != result_text:
                     cl.copy(result_text)
                     self.showMessage("替换列表：", json.dumps(comparison, ensure_ascii=False))
 
                 # print(text)
                 # print(new_tex)
-            if self.regSettings.value("chkBox_html")==1 and not(self.clipboard.mimeData().hasImage()) and self.clipboard.mimeData().hasHtml():
+            if self.regSettings.value("chkBox_html")==1 and not(self.clipboard.mimeData().hasImage()) and self.clipboard.mimeData().hasHtml() and text == result_text:
                 cl.copy(text)
-                print("a")
+                # print("a")
                 self.showMessage("提醒!","html已转plain")
 
 
