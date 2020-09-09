@@ -147,9 +147,14 @@ class MyWidget(QSystemTrayIcon):
 
                 # print(text)
                 # print(new_tex)
-            if self.regSettings.value("chkBox_html")==1 and not(self.clipboard.mimeData().hasImage()) and self.clipboard.mimeData().hasHtml() and text == result_text:
+            if self.regSettings.value("chkBox_html")==1 and not(self.clipboard.mimeData().hasImage()) and self.clipboard.mimeData().hasHtml() and text == self.last_text:
+            # if self.regSettings.value("chkBox_html")==1 and not(self.clipboard.mimeData().hasImage()) and self.clipboard.mimeData().hasHtml():
                 cl.copy(text)
-                # print("a")
+                n=0
+                while(not(self.clipboard.text()) and n < 10):
+                    cl.copy(text)
+                    n+=1
+
                 self.showMessage("提醒!","html已转plain")
 
 
