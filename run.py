@@ -61,7 +61,7 @@ class MyWidget(QSystemTrayIcon):
 
 
         startupAction.setCheckable(True)
-        startupAction.setChecked(self.startup_var.contains("Amend_clipboard"))
+        startupAction.setChecked(self.startup_var.value("Amend_clipboard")==sys.argv[0])
         startupAction.triggered.connect(self.app_startup)
         menu.addSeparator()
         #设置是否禁用剪贴板监控
