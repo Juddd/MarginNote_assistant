@@ -54,9 +54,8 @@ class MyWidget(QSystemTrayIcon):
         #开机自启按扭
         #配置开机自启注册表路径
         self.startup_var=QSettings(variable.RUN_PATH, QSettings.NativeFormat)
-        # if not(self.startup_var.contains("Amend_clipboard")):
-        #     self.startup_var.setValue("un_valid", sys.argv[0])
-
+        # if self.startup_var.value("Amend_clipboard")!=sys.argv[0]:
+        #     self.startup_var.setValue("Amend_clipboard",sys.argv[0])
 
         startupAction=menu.addAction("开机自启")
 
