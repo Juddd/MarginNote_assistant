@@ -44,9 +44,6 @@ class QmyListPlace(QDialog):
         self.ui.tableView.setColumnWidth(2,55)
 
         self.regSettings=QSettings("zyd","Amend_clipboard")
-        if not(self.regSettings.contains("chkBox_html")):
-            self.regSettings.setValue("chkBox_html",0)
-        self.ui.chkBox_html.setChecked(Qt.Checked if self.regSettings.value("chkBox_html")==1 else Qt.Unchecked)
 
 
 
@@ -104,13 +101,6 @@ class QmyListPlace(QDialog):
         curIndex = self.selectionModel.currentIndex()  # 获取当前选择单元格的模型索引
         # if curIndex.row()>1:
         self.itemModel.removeRow(curIndex.row())  # 删除当前行
-
-    @pyqtSlot(bool)
-    def on_chkBox_html_clicked(self,qcheck):
-        if qcheck:
-            self.regSettings.setValue("chkBox_html", 1)
-        else:
-            self.regSettings.setValue("chkBox_html", 0)
 
     #chk_all变量中0为全不选，1为部分选,2为全选，
     @pyqtSlot(bool)

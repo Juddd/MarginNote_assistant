@@ -10,24 +10,9 @@ import json
 import imgs_rc
 import variable
 import re
-
-import win32clipboard as wc
-import win32con
+import time
 
 
-def get_text():
-    """ 读取 """
-    wc.OpenClipboard()
-    text = wc.GetClipboardData()
-    wc.CloseClipboard()
-    return text
-
-
-def set_text(strs):
-    """ 写入 """
-    wc.OpenClipboard()
-    wc.EmptyClipboard()
-    wc.SetClipboardData(strs)
 
 
 from mylistplace import QmyListPlace
@@ -90,7 +75,7 @@ class MyWidget(QSystemTrayIcon):
 
         self.clipboard = QApplication.clipboard()
 
-        self.last_text=None
+        self.last_text=None#上次的内容
 
 
         self.clipboard.dataChanged.connect(self.fun)
@@ -119,17 +104,17 @@ class MyWidget(QSystemTrayIcon):
         if self.regSettings.value("un_valid")==0:
             text = self.clipboard.text()
             result_text = ""
-            # variable.radicals.update(variable)
-            if self.clipboard.mimeData().hasText() and not(self.clipboard.mimeData().hasImage()) and self.last_text != text:
+            # print("进入")
+            #剪切板中有文本、没有图片、没有文件列表
+            if self.clipboard.mimeData().hasText() and not(self.clipboard.mimeData().hasImage()) and not(self.clipboard.mimeData().hasUrls()) and self.last_text != text:
                 #处理编码问题
                 processed = "".join([self.re_list_han[x] if x in self.re_list_han else x for x in list(text)])
                 comparison = {a: b for a, b in zip(list(text), list(processed)) if a != b}
 
-                #处理英文逗号后面可能带空格的问题
+                #处理英文逗号后面可能带空格的问题，因为英文文章中的","后来是一定会接一个空格的，所以得预处理一下
                 if "," in self.re_list:
                     processed = re.sub(", +",",",processed)
 
-                # print("self.re_list:",self.re_list)
                 #处理整个对话框列表的问题
                 for x in list(processed):
                     if x in self.re_list:
@@ -139,22 +124,20 @@ class MyWidget(QSystemTrayIcon):
                         result_text+=x
                 self.last_text = result_text
 
-                # print("cc")
-                if text != result_text:
+                if text != result_text:#字符有替换或编码有调整
+                    # print("工作1")
                     cl.copy(result_text)
                     self.showMessage("替换列表：", json.dumps(comparison, ensure_ascii=False))
 
-                # print(text)
-                # print(new_tex)
-            if self.regSettings.value("chkBox_html")==1 and not(self.clipboard.mimeData().hasImage()) and self.clipboard.mimeData().hasHtml() and text == self.last_text:
-            # if self.regSettings.value("chkBox_html")==1 and not(self.clipboard.mimeData().hasImage()) and self.clipboard.mimeData().hasHtml():
-                cl.copy(text)
-                n=0
-                while(not(self.clipboard.text()) and n < 10):
+                else:#什么都没有变但是把html转成了纯文本
+                    # print("工作二")
                     cl.copy(text)
-                    n+=1
-
-                self.showMessage("提醒!","html已转plain")
+                    n = 0
+                    while (not (self.clipboard.text()) and n < 10):
+                        cl.copy(text)
+                        time.sleep(0.05)
+                        n += 1
+                    self.showMessage("提醒!", "html已转plain")
 
 
     def setting(self):
