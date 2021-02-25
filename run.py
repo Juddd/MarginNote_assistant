@@ -129,7 +129,7 @@ class MyWidget(QSystemTrayIcon):
                     cl.copy(result_text)
                     self.showMessage("替换列表：", json.dumps(comparison, ensure_ascii=False))
 
-                else:#什么都没有变但是把html转成了纯文本
+                elif self.clipboard.mimeData().hasHtml():#什么都没有变但是把html转成了纯文本
                     # print("工作二")
                     cl.copy(text)
                     n = 0
