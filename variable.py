@@ -54,7 +54,8 @@ supplement = {
     "⻰": "龙",
     "⻱": "龜",
     "⻲": "亀",
-    "⻳": "龟"
+    "⻳": "龟",
+    "⻨": "麦"
 }
 
 #https://github.com/furuiyang0715/spider_notes/blob/master/codes/kangxi.json，这里其实不完全，后根据"康熙部首.pdf"附件又重新更新了一遍
