@@ -1,5 +1,5 @@
 import sys
-from unicodedata import normalize
+import statistics
 import clipboard as cl
 from PyQt5.QtWidgets import QApplication,QSystemTrayIcon,QDialog,QMenu,qApp
 from PyQt5.QtGui import QIcon
@@ -127,13 +127,30 @@ class MyWidget(QSystemTrayIcon):
                 if text != result_text:#字符有替换或编码有调整
                     # print("工作1")
                     cl.copy(result_text)
-                    self.showMessage("替换列表：", json.dumps(comparison, ensure_ascii=False))
+
+                    n = 0
+                    lis=[]
+                    while (n < 9):#主要想避免那些无效的“?”
+                        cl.copy(text)
+                        time.sleep(0.05)
+                        content = self.clipboard.text()
+                        if bool(content):#不为空时记录一下
+                            lis.append(content)
+                            n += 1
+
+                    m = 0
+                    while (not (self.clipboard.text()) and m < 10):
+                        cl.copy(statistics.mode(lis))
+                        time.sleep(0.05)
+                        m += 1
+
+                    self.showMessage("替换列表：", json.dumps(comparison, ensure_ascii=False).replace(":", "→"))
 
                 elif self.clipboard.mimeData().hasHtml():#什么都没有变但是把html转成了纯文本
                     # print("工作二")
                     cl.copy(text)
                     n = 0
-                    while (not (self.clipboard.text()) and n < 10):
+                    while (not (self.clipboard.text()) and n < 10):#这里并不是要求一定要复制10次，只要剪贴板不为空就可以了
                         cl.copy(text)
                         time.sleep(0.05)
                         n += 1
