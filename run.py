@@ -136,7 +136,7 @@ class MyWidget(QSystemTrayIcon):
                         if bool(content):#不为空时记录一下
                             lis.append(content)
                             n += 1
-                    print(lis)
+
                     m = 0
                     while (not (self.clipboard.text()) and m < 10):
                         cl.copy(statistics.mode(lis))
