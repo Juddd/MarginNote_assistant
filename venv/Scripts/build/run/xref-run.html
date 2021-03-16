@@ -189,11 +189,11 @@ imports:
  &#8226;   <a href="#sre_compile">sre_compile</a>
  &#8226;   <a href="#sre_constants">sre_constants</a>
  &#8226;   <a href="#sre_parse">sre_parse</a>
+ &#8226;   <a href="#statistics">statistics</a>
  &#8226;   <a href="#sys">sys</a>
  &#8226;   <a href="#time">time</a>
  &#8226;   <a href="#traceback">traceback</a>
  &#8226;   <a href="#types">types</a>
- &#8226;   <a href="#unicodedata">unicodedata</a>
  &#8226;   <a href="#variable">variable</a>
  &#8226;   <a href="#warnings">warnings</a>
  &#8226;   <a href="#weakref">weakref</a>
@@ -219,7 +219,7 @@ imported by:
   <a target="code" href="" type="text/plain"><tt>'org.python'</tt></a>
 <span class="moduletype">MissingModule</span>  <div class="import">
 imported by:
-    <a href="#pickle">pickle</a>
+    <a href="#copy">copy</a>
  &#8226;   <a href="#xml.sax">xml.sax</a>
 
   </div>
@@ -600,6 +600,16 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="_contextvars"></a>
+  <tt>_contextvars</tt> <span class="moduletype"><tt>c:\users\lenovo\appdata\local\programs\python\python37\DLLs\_contextvars.pyd</tt></span>  <div class="import">
+imported by:
+    <a href="#contextvars">contextvars</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="_ctypes"></a>
   <tt>_ctypes</tt> <span class="moduletype"><tt>c:\users\lenovo\appdata\local\programs\python\python37\DLLs\_ctypes.pyd</tt></span>  <div class="import">
 imported by:
@@ -620,6 +630,16 @@ imports:
   <div class="import">
 imported by:
     <a href="#datetime">datetime</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="_decimal"></a>
+  <tt>_decimal</tt> <span class="moduletype"><tt>c:\users\lenovo\appdata\local\programs\python\python37\DLLs\_decimal.pyd</tt></span>  <div class="import">
+imported by:
+    <a href="#decimal">decimal</a>
 
   </div>
 
@@ -848,6 +868,29 @@ imports:
   <div class="import">
 imported by:
     <a href="#abc">abc</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="_pydecimal"></a>
+  <a target="code" href="///C:/users/lenovo/appdata/local/programs/python/python37/lib/_pydecimal.py" type="text/plain"><tt>_pydecimal</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#collections">collections</a>
+ &#8226;   <a href="#contextvars">contextvars</a>
+ &#8226;   <a href="#itertools">itertools</a>
+ &#8226;   <a href="#locale">locale</a>
+ &#8226;   <a href="#math">math</a>
+ &#8226;   <a href="#numbers">numbers</a>
+ &#8226;   <a href="#re">re</a>
+ &#8226;   <a href="#sys">sys</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#decimal">decimal</a>
 
   </div>
 
@@ -1143,6 +1186,7 @@ imported by:
  &#8226;   <a href="#importlib.abc">importlib.abc</a>
  &#8226;   <a href="#inspect">inspect</a>
  &#8226;   <a href="#io">io</a>
+ &#8226;   <a href="#numbers">numbers</a>
  &#8226;   <a href="#os">os</a>
  &#8226;   <a href="#run.py">run.py</a>
  &#8226;   <a href="#selectors">selectors</a>
@@ -1293,6 +1337,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#random">random</a>
+ &#8226;   <a href="#statistics">statistics</a>
  &#8226;   <a href="#urllib.request">urllib.request</a>
 
   </div>
@@ -1609,7 +1654,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#ast">ast</a>
+    <a href="#_pydecimal">_pydecimal</a>
+ &#8226;   <a href="#ast">ast</a>
  &#8226;   <a href="#collections.abc">collections.abc</a>
  &#8226;   <a href="#contextlib">contextlib</a>
  &#8226;   <a href="#difflib">difflib</a>
@@ -1629,6 +1675,7 @@ imported by:
  &#8226;   <a href="#shlex">shlex</a>
  &#8226;   <a href="#shutil">shutil</a>
  &#8226;   <a href="#ssl">ssl</a>
+ &#8226;   <a href="#statistics">statistics</a>
  &#8226;   <a href="#string">string</a>
  &#8226;   <a href="#threading">threading</a>
  &#8226;   <a href="#tokenize">tokenize</a>
@@ -1693,12 +1740,28 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="contextvars"></a>
+  <a target="code" href="///C:/users/lenovo/appdata/local/programs/python/python37/lib/contextvars.py" type="text/plain"><tt>contextvars</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#_contextvars">_contextvars</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#_pydecimal">_pydecimal</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="copy"></a>
   <a target="code" href="///C:/users/lenovo/appdata/local/programs/python/python37/lib/copy.py" type="text/plain"><tt>copy</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#copyreg">copyreg</a>
- &#8226;   <a href="#org">org</a>
+    <a href="#'org.python'">'org.python'</a>
+ &#8226;   <a href="#copyreg">copyreg</a>
  &#8226;   <a href="#types">types</a>
  &#8226;   <a href="#weakref">weakref</a>
 
@@ -1810,6 +1873,24 @@ imported by:
  &#8226;   <a href="#http.cookiejar">http.cookiejar</a>
  &#8226;   <a href="#http.server">http.server</a>
  &#8226;   <a href="#plistlib">plistlib</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="decimal"></a>
+  <a target="code" href="///C:/users/lenovo/appdata/local/programs/python/python37/lib/decimal.py" type="text/plain"><tt>decimal</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#_decimal">_decimal</a>
+ &#8226;   <a href="#_pydecimal">_pydecimal</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#fractions">fractions</a>
+ &#8226;   <a href="#statistics">statistics</a>
 
   </div>
 
@@ -4992,6 +5073,28 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="fractions"></a>
+  <a target="code" href="///C:/users/lenovo/appdata/local/programs/python/python37/lib/fractions.py" type="text/plain"><tt>fractions</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#decimal">decimal</a>
+ &#8226;   <a href="#math">math</a>
+ &#8226;   <a href="#numbers">numbers</a>
+ &#8226;   <a href="#operator">operator</a>
+ &#8226;   <a href="#re">re</a>
+ &#8226;   <a href="#sys">sys</a>
+ &#8226;   <a href="#warnings">warnings</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#statistics">statistics</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="ftplib"></a>
   <a target="code" href="///C:/users/lenovo/appdata/local/programs/python/python37/lib/ftplib.py" type="text/plain"><tt>ftplib</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
@@ -5688,13 +5791,15 @@ imported by:
   <a name="itertools"></a>
   <tt>itertools</tt> <span class="moduletype"><i>(builtin module)</i></span>  <div class="import">
 imported by:
-    <a href="#calendar">calendar</a>
+    <a href="#_pydecimal">_pydecimal</a>
+ &#8226;   <a href="#calendar">calendar</a>
  &#8226;   <a href="#collections">collections</a>
  &#8226;   <a href="#inspect">inspect</a>
  &#8226;   <a href="#pickle">pickle</a>
  &#8226;   <a href="#plistlib">plistlib</a>
  &#8226;   <a href="#random">random</a>
  &#8226;   <a href="#reprlib">reprlib</a>
+ &#8226;   <a href="#statistics">statistics</a>
  &#8226;   <a href="#threading">threading</a>
  &#8226;   <a href="#tokenize">tokenize</a>
  &#8226;   <a href="#traceback">traceback</a>
@@ -5860,6 +5965,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#_bootlocale">_bootlocale</a>
+ &#8226;   <a href="#_pydecimal">_pydecimal</a>
  &#8226;   <a href="#_strptime">_strptime</a>
  &#8226;   <a href="#calendar">calendar</a>
  &#8226;   <a href="#gettext">gettext</a>
@@ -5934,9 +6040,12 @@ imported by:
   <a name="math"></a>
   <tt>math</tt> <span class="moduletype"><i>(builtin module)</i></span>  <div class="import">
 imported by:
-    <a href="#datetime">datetime</a>
+    <a href="#_pydecimal">_pydecimal</a>
+ &#8226;   <a href="#datetime">datetime</a>
+ &#8226;   <a href="#fractions">fractions</a>
  &#8226;   <a href="#random">random</a>
  &#8226;   <a href="#selectors">selectors</a>
+ &#8226;   <a href="#statistics">statistics</a>
 
   </div>
 
@@ -6090,6 +6199,24 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="numbers"></a>
+  <a target="code" href="///C:/users/lenovo/appdata/local/programs/python/python37/lib/numbers.py" type="text/plain"><tt>numbers</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#abc">abc</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#_pydecimal">_pydecimal</a>
+ &#8226;   <a href="#fractions">fractions</a>
+ &#8226;   <a href="#statistics">statistics</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="opcode"></a>
   <a target="code" href="///C:/users/lenovo/appdata/local/programs/python/python37/lib/opcode.py" type="text/plain"><tt>opcode</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
@@ -6119,6 +6246,7 @@ imports:
 imported by:
     <a href="#collections">collections</a>
  &#8226;   <a href="#email._header_value_parser">email._header_value_parser</a>
+ &#8226;   <a href="#fractions">fractions</a>
  &#8226;   <a href="#inspect">inspect</a>
  &#8226;   <a href="#run.py">run.py</a>
  &#8226;   <a href="#typing">typing</a>
@@ -6151,7 +6279,7 @@ imported by:
   <a target="code" href="" type="text/plain"><tt>org</tt></a>
 <span class="moduletype">MissingModule</span>  <div class="import">
 imported by:
-    <a href="#copy">copy</a>
+    <a href="#pickle">pickle</a>
 
   </div>
 
@@ -6276,8 +6404,7 @@ imported by:
   <a target="code" href="///C:/users/lenovo/appdata/local/programs/python/python37/lib/pickle.py" type="text/plain"><tt>pickle</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#'org.python'">'org.python'</a>
- &#8226;   <a href="#_compat_pickle">_compat_pickle</a>
+    <a href="#_compat_pickle">_compat_pickle</a>
  &#8226;   <a href="#_pickle">_pickle</a>
  &#8226;   <a href="#argparse">argparse</a>
  &#8226;   <a href="#codecs">codecs</a>
@@ -6286,6 +6413,7 @@ imports:
  &#8226;   <a href="#functools">functools</a>
  &#8226;   <a href="#io">io</a>
  &#8226;   <a href="#itertools">itertools</a>
+ &#8226;   <a href="#org">org</a>
  &#8226;   <a href="#pprint">pprint</a>
  &#8226;   <a href="#re">re</a>
  &#8226;   <a href="#struct">struct</a>
@@ -6680,7 +6808,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#_sre">_sre</a>
+    <a href="#_pydecimal">_pydecimal</a>
+ &#8226;   <a href="#_sre">_sre</a>
  &#8226;   <a href="#_strptime">_strptime</a>
  &#8226;   <a href="#argparse">argparse</a>
  &#8226;   <a href="#base64">base64</a>
@@ -6697,6 +6826,7 @@ imported by:
  &#8226;   <a href="#email.utils">email.utils</a>
  &#8226;   <a href="#encodings.idna">encodings.idna</a>
  &#8226;   <a href="#fnmatch">fnmatch</a>
+ &#8226;   <a href="#fractions">fractions</a>
  &#8226;   <a href="#ftplib">ftplib</a>
  &#8226;   <a href="#gettext">gettext</a>
  &#8226;   <a href="#glob">glob</a>
@@ -7076,6 +7206,28 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="statistics"></a>
+  <a target="code" href="///C:/users/lenovo/appdata/local/programs/python/python37/lib/statistics.py" type="text/plain"><tt>statistics</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#bisect">bisect</a>
+ &#8226;   <a href="#collections">collections</a>
+ &#8226;   <a href="#decimal">decimal</a>
+ &#8226;   <a href="#fractions">fractions</a>
+ &#8226;   <a href="#itertools">itertools</a>
+ &#8226;   <a href="#math">math</a>
+ &#8226;   <a href="#numbers">numbers</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#run.py">run.py</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="string"></a>
   <a target="code" href="///C:/users/lenovo/appdata/local/programs/python/python37/lib/string.py" type="text/plain"><tt>string</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
@@ -7181,6 +7333,7 @@ imported by:
     <a href="#PyQt5">PyQt5</a>
  &#8226;   <a href="#_bootlocale">_bootlocale</a>
  &#8226;   <a href="#_collections_abc">_collections_abc</a>
+ &#8226;   <a href="#_pydecimal">_pydecimal</a>
  &#8226;   <a href="#argparse">argparse</a>
  &#8226;   <a href="#base64">base64</a>
  &#8226;   <a href="#bdb">bdb</a>
@@ -7202,6 +7355,7 @@ imported by:
  &#8226;   <a href="#encodings.utf_16">encodings.utf_16</a>
  &#8226;   <a href="#encodings.utf_32">encodings.utf_32</a>
  &#8226;   <a href="#enum">enum</a>
+ &#8226;   <a href="#fractions">fractions</a>
  &#8226;   <a href="#ftplib">ftplib</a>
  &#8226;   <a href="#getopt">getopt</a>
  &#8226;   <a href="#getpass">getpass</a>
@@ -7629,7 +7783,6 @@ imported by:
   <tt>unicodedata</tt> <span class="moduletype"><tt>c:\users\lenovo\appdata\local\programs\python\python37\DLLs\unicodedata.pyd</tt></span>  <div class="import">
 imported by:
     <a href="#encodings.idna">encodings.idna</a>
- &#8226;   <a href="#run.py">run.py</a>
  &#8226;   <a href="#stringprep">stringprep</a>
 
   </div>
@@ -8042,6 +8195,7 @@ imported by:
  &#8226;   <a href="#bz2">bz2</a>
  &#8226;   <a href="#collections">collections</a>
  &#8226;   <a href="#enum">enum</a>
+ &#8226;   <a href="#fractions">fractions</a>
  &#8226;   <a href="#ftplib">ftplib</a>
  &#8226;   <a href="#getpass">getpass</a>
  &#8226;   <a href="#gettext">gettext</a>

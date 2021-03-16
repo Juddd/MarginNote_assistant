@@ -125,25 +125,24 @@ class MyWidget(QSystemTrayIcon):
                 self.last_text = result_text
 
                 if text != result_text:#字符有替换或编码有调整
-                    # print("工作1")
                     cl.copy(result_text)
 
                     n = 0
                     lis=[]
                     while (n < 9):#主要想避免那些无效的“?”
-                        cl.copy(text)
+                        cl.copy(result_text)
                         time.sleep(0.05)
                         content = self.clipboard.text()
                         if bool(content):#不为空时记录一下
                             lis.append(content)
                             n += 1
-
+                    print(lis)
                     m = 0
                     while (not (self.clipboard.text()) and m < 10):
                         cl.copy(statistics.mode(lis))
                         time.sleep(0.05)
                         m += 1
-
+                    # print(json.dumps(comparison, ensure_ascii=False).replace(":", "→"))
                     self.showMessage("替换列表：", json.dumps(comparison, ensure_ascii=False).replace(":", "→"))
 
                 elif self.clipboard.mimeData().hasHtml():#什么都没有变但是把html转成了纯文本
