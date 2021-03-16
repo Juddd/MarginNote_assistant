@@ -102,7 +102,15 @@ class MyWidget(QSystemTrayIcon):
 
     def fun(self):
         if self.regSettings.value("un_valid")==0:
-            text = self.clipboard.text()
+            lis=[]
+            m=0
+            while(m < 9):
+                content = self.clipboard.text()
+                time.sleep(0.03)
+                if bool(content):
+                    lis.append(content)
+                    m += 1
+            text = statistics.mode(lis)
             result_text = ""
             # print("进入")
             #剪切板中有文本、没有图片、没有文件列表
@@ -126,24 +134,8 @@ class MyWidget(QSystemTrayIcon):
 
                 if text != result_text:#字符有替换或编码有调整
                     cl.copy(result_text)
-
-                    n = 0
-                    lis=[]
-                    while (n < 9):#主要想避免那些无效的“?”
-                        cl.copy(result_text)
-                        time.sleep(0.05)
-                        content = self.clipboard.text()
-                        if bool(content):#不为空时记录一下
-                            lis.append(content)
-                            n += 1
-
-                    m = 0
-                    while (not (self.clipboard.text()) and m < 10):
-                        cl.copy(statistics.mode(lis))
-                        time.sleep(0.05)
-                        m += 1
-                    # print(json.dumps(comparison, ensure_ascii=False).replace(":", "→"))
                     self.showMessage("替换列表：", json.dumps(comparison, ensure_ascii=False).replace(":", "→"))
+
 
                 elif self.clipboard.mimeData().hasHtml():#什么都没有变但是把html转成了纯文本
                     # print("工作二")
