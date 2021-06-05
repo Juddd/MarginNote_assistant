@@ -3,7 +3,7 @@ import statistics
 import clipboard as cl
 from PyQt5.QtWidgets import QApplication,QSystemTrayIcon,QDialog,QMenu,qApp
 from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import QSettings,pyqtSlot
+from PyQt5.QtCore import QSettings,pyqtSlot,Qt
 
 
 import json
@@ -11,8 +11,6 @@ import imgs_rc
 import variable
 import re
 import time
-
-
 
 
 from mylistplace import QmyListPlace
@@ -23,6 +21,7 @@ class MyWidget(QSystemTrayIcon):
     def __init__(self):
         super().__init__()
 
+        self.check_logo = [":images/img/tray_logo2.png", ":images/img/tray_logo.png"]
         self.re_list_han=variable.radicals
         self.re_list_han.update(variable.supplement)
         # self.punctuation=set("，、？：！（）")
@@ -31,7 +30,7 @@ class MyWidget(QSystemTrayIcon):
         if not(self.regSettings.contains("un_valid")):
             self.regSettings.setValue("un_valid",0)
 
-        self.setIcon(QIcon(":images/img/tray_logo.png"))
+        self.setIcon(QIcon(self.check_logo[self.regSettings.value("un_valid")]))
         self.setToolTip("修正从MarginNote脑图中复制出来的汉字编码")
         self.showMessage("Message", "Running!")
 
@@ -51,10 +50,11 @@ class MyWidget(QSystemTrayIcon):
         menu.addSeparator()
         #设置是否禁用剪贴板监控
         # self.un_valid=False
-        validAction=menu.addAction("全局禁用")
-        validAction.setCheckable(True)
-        validAction.setChecked(self.regSettings.value("un_valid")==1)
-        validAction.triggered.connect(self.set_valid)
+        self.validAction=menu.addAction("全局禁用")
+        # self.validAction.setToolTip("按Alt+V可切换状态")
+        self.validAction.setCheckable(True)
+        self.validAction.setChecked(self.regSettings.value("un_valid")==1)
+        self.validAction.triggered.connect(self.set_valid)
         menu.addSeparator()
         #设置和退出
         settingAction = menu.addAction("设置")
@@ -86,12 +86,21 @@ class MyWidget(QSystemTrayIcon):
     def set_valid(self,qvalid):
         if qvalid:#打勾
             self.regSettings.setValue("un_valid", 1)
+            self.setIcon(QIcon(self.check_logo[1]))
         else:#没打勾
             self.regSettings.setValue("un_valid", 0)
+            self.setIcon(QIcon(self.check_logo[0]))
 
     def onTrayIconActivated(self, reason):
         if reason == QSystemTrayIcon.DoubleClick:
             self.setting()
+
+    # def keyPressEvent(self, event):
+    #     if (event.key() == Qt.Key_V) and (event.modifiers() & Qt.AltModifier):
+    #         reg_value=self.regSettings.value("un_valid")
+    #         self.validAction.setChecked(reg_value == 1)
+    #         self.validAction.triggered.connect(self.set_valid)
+    #         self.setIcon(QIcon(self.check_logo[reg_value]))
 
     @pyqtSlot(bool)
     def app_startup(self,qstart):

@@ -1,5 +1,3 @@
-import time
+lis=[5,6]
 
-print("a")
-time.sleep(0.05)
-print("b")
+print(type(lis[0]))
