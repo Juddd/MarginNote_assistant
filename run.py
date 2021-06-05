@@ -21,14 +21,14 @@ class MyWidget(QSystemTrayIcon):
     def __init__(self):
         super().__init__()
 
-        self.check_logo = [":images/img/tray_logo2.png", ":images/img/tray_logo.png"]
+        self.check_logo = [":images/img/tray_logo.png",":images/img/tray_logo2.png"]
         self.re_list_han=variable.radicals
         self.re_list_han.update(variable.supplement)
         # self.punctuation=set("，、？：！（）")
 
         self.regSettings=QSettings("zyd","Amend_clipboard")
         if not(self.regSettings.contains("un_valid")):
-            self.regSettings.setValue("un_valid",0)
+            self.regSettings.setValue("un_valid",0) #注意全局禁用时值是1，而值为0时是启用的
 
         self.setIcon(QIcon(self.check_logo[self.regSettings.value("un_valid")]))
         self.setToolTip("修正从MarginNote脑图中复制出来的汉字编码")
