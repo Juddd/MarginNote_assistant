@@ -80,6 +80,8 @@ class QmyListPlace(QDialog):
             self.regSettings.setValue("chk_all", Qt.Unchecked)
 
 
+
+
     def on_append_row_released(self):
         itemlist = []  # QStandardItem 对象列表
         for i in range(2):  # 不包括最后一列

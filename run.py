@@ -21,7 +21,7 @@ class MyWidget(QSystemTrayIcon):
     def __init__(self):
         super().__init__()
 
-        self.check_logo = [":images/img/tray_logo.png",":images/img/tray_logo2.png"]
+        self.check_logo = [":images/img/tray_logo.png",":images/img/tray_logo_circle.png",":images/img/tray_logo2.png",":images/img/tray_logo2_circle.png"]
         self.re_list_han=variable.radicals
         self.re_list_han.update(variable.supplement)
         # self.punctuation=set("，、？：！（）")
@@ -30,7 +30,7 @@ class MyWidget(QSystemTrayIcon):
         if not(self.regSettings.contains("un_valid")):
             self.regSettings.setValue("un_valid",0) #注意全局禁用时值是1，而值为0时是启用的
 
-        self.setIcon(QIcon(self.check_logo[self.regSettings.value("un_valid")]))
+        self.setIcon(QIcon(self.check_logo[self.select_logo(self.regSettings.value("un_valid"), self.regSettings.value("chk_all"))]))
         self.setToolTip("修正从MarginNote脑图中复制出来的汉字编码")
         self.showMessage("Message", "Running!")
 
@@ -82,19 +82,35 @@ class MyWidget(QSystemTrayIcon):
         #关联双击托盘动作
         self.activated.connect(self.onTrayIconActivated)
 
+        # all_check = pyqtSignal(bool)
+
     @pyqtSlot(bool)
     def set_valid(self,qvalid):
         if qvalid:#打勾
             self.regSettings.setValue("un_valid", 1)
-            self.setIcon(QIcon(self.check_logo[1]))
         else:#没打勾
             self.regSettings.setValue("un_valid", 0)
-            self.setIcon(QIcon(self.check_logo[0]))
 
     def onTrayIconActivated(self, reason):
         if reason == QSystemTrayIcon.DoubleClick:
-            self.setting()
+            self.set_valid(not(self.regSettings.value("un_valid")))
+            self.validAction.setChecked(self.regSettings.value("un_valid"))
+            self.setIcon(QIcon(self.check_logo[self.select_logo(self.regSettings.value("un_valid"), self.regSettings.value("chk_all"))]))
 
+        if reason == QSystemTrayIcon.MiddleClick:
+            self.list_replace_gui.on_chk_all_clicked(not(self.regSettings.value("chk_all")))
+            self.list_replace_gui.ui.chk_all.setCheckState(Qt.Checked if self.regSettings.value("chk_all") else Qt.Unchecked)
+            self.setIcon(QIcon(self.check_logo[self.select_logo(self.regSettings.value("un_valid"), self.regSettings.value("chk_all"))]))
+
+    def select_logo(self,un_valid,chk_all):
+        if bool(un_valid) and bool(chk_all):
+            return 3
+        if bool(un_valid) and not(bool(chk_all)):
+            return 2
+        if not(bool(un_valid)) and bool(chk_all):
+            return 1
+        else:
+            return 0
     # def keyPressEvent(self, event):
     #     if (event.key() == Qt.Key_V) and (event.modifiers() & Qt.AltModifier):
     #         reg_value=self.regSettings.value("un_valid")
