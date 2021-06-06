@@ -64,6 +64,7 @@ class MyWidget(QSystemTrayIcon):
         self.setContextMenu(menu)
 
         self.list_replace_gui=QmyListPlace()
+        self.list_replace_gui.change_logo.connect(self.do_change_logo)
 
         self.re_dic=self.list_replace_gui.getTableContent()
         # with open("assistant_config.ini", 'w') as fp:
@@ -90,17 +91,18 @@ class MyWidget(QSystemTrayIcon):
             self.regSettings.setValue("un_valid", 1)
         else:#没打勾
             self.regSettings.setValue("un_valid", 0)
+        self.do_change_logo()
 
     def onTrayIconActivated(self, reason):
         if reason == QSystemTrayIcon.DoubleClick:
             self.set_valid(not(self.regSettings.value("un_valid")))
             self.validAction.setChecked(self.regSettings.value("un_valid"))
-            self.setIcon(QIcon(self.check_logo[self.select_logo(self.regSettings.value("un_valid"), self.regSettings.value("chk_all"))]))
 
         if reason == QSystemTrayIcon.MiddleClick:
-            self.list_replace_gui.on_chk_all_clicked(not(self.regSettings.value("chk_all")))
+            self.list_replace_gui.on_clicked(not(self.regSettings.value("chk_all")))
             self.list_replace_gui.ui.chk_all.setCheckState(Qt.Checked if self.regSettings.value("chk_all") else Qt.Unchecked)
-            self.setIcon(QIcon(self.check_logo[self.select_logo(self.regSettings.value("un_valid"), self.regSettings.value("chk_all"))]))
+            self.do_change_logo()
+            self.setting_nowin()
 
     def select_logo(self,un_valid,chk_all):
         if bool(un_valid) and bool(chk_all):
@@ -124,6 +126,11 @@ class MyWidget(QSystemTrayIcon):
             self.startup_var.setValue("Amend_clipboard",sys.argv[0])
         else:
             self.startup_var.remove("Amend_clipboard")
+
+
+    def do_change_logo(self):
+        self.setIcon(QIcon(self.check_logo[self.select_logo(self.regSettings.value("un_valid"), self.regSettings.value("chk_all"))]))
+
 
     def fun(self):
         if self.regSettings.value("un_valid")==0:
@@ -174,7 +181,7 @@ class MyWidget(QSystemTrayIcon):
 
 
     def setting(self):
-        self.list_replace_gui=QmyListPlace()
+        # self.list_replace_gui=QmyListPlace()
         self.re_dic=self.list_replace_gui.getTableContent()
         self.re_list={k:v["string"] for k,v in self.re_dic.items() if v["used"]}
 
@@ -187,6 +194,15 @@ class MyWidget(QSystemTrayIcon):
             self.re_list = {k: v["string"] for k, v in self.re_dic.items() if v["used"]}
         # print(self.re_list)
 
+    def setting_nowin(self):
+        self.re_dic = self.list_replace_gui.getTableContent()
+        self.re_list = {k: v["string"] for k, v in self.re_dic.items() if v["used"]}
+
+        with open("assistant_config.ini", 'w') as fp:
+            json.dump(self.re_dic, fp, ensure_ascii=False)
+
+        self.re_list = {k: v["string"] for k, v in self.re_dic.items() if v["used"]}
+
 
     def exit(self):
         qApp.quit()
@@ -194,7 +210,7 @@ class MyWidget(QSystemTrayIcon):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     app.setQuitOnLastWindowClosed(False)
-    app.setApplicationVersion("1.27")
+    app.setApplicationVersion("1.32")
     app.setApplicationName("Amend_clipboard")
     app.setOrganizationName("zyd")
 

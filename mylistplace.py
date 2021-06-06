@@ -1,15 +1,17 @@
 import sys
 
-from PyQt5.QtWidgets import  QApplication, QDialog
+from PyQt5.QtWidgets import  QApplication, QDialog,qApp
 from PyQt5.QtCore import  Qt,QItemSelectionModel
-from PyQt5.QtGui import QStandardItemModel, QStandardItem
-from PyQt5.QtCore import QSettings,pyqtSlot
+from PyQt5.QtGui import QStandardItemModel, QStandardItem,QIcon
+from PyQt5.QtCore import QSettings,pyqtSlot,pyqtSignal
 
 from ui_listplace import Ui_ListReplace
+
 import json
 import os
 
 class QmyListPlace(QDialog):
+    change_logo = pyqtSignal()
     def __init__(self):
         super().__init__()
 
@@ -44,6 +46,11 @@ class QmyListPlace(QDialog):
         self.ui.tableView.setColumnWidth(2,55)
 
         self.regSettings=QSettings("zyd","Amend_clipboard")
+
+        self.ui.chk_all.clicked.connect(self.on_clicked)
+
+
+
 
 
 
@@ -105,8 +112,10 @@ class QmyListPlace(QDialog):
         self.itemModel.removeRow(curIndex.row())  # 删除当前行
 
     #chk_all变量中0为全不选，1为部分选,2为全选，
+    # @pyqtSlot(bool)
+    # def on_chk_all_clicked(self,qcheck):
     @pyqtSlot(bool)
-    def on_chk_all_clicked(self,qcheck):
+    def on_clicked(self, qcheck):
         if qcheck:
             self.regSettings.setValue("chk_all", Qt.Checked)
             for i in range(self.itemModel.rowCount()):
@@ -115,6 +124,9 @@ class QmyListPlace(QDialog):
             self.regSettings.setValue("chk_all", Qt.Unchecked)
             for i in range(self.itemModel.rowCount()):
                 self.itemModel.item(i,2).setCheckState(Qt.Unchecked)
+
+        self.change_logo.emit()
+        # qApp.setIcon(QIcon(self.check_logo[self.select_logo(self.regSettings.value("un_valid"), self.regSettings.value("chk_all"))]))
 
 
     def getTableContent(self):
