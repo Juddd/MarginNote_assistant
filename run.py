@@ -15,6 +15,19 @@ import time
 
 from mylistplace import QmyListPlace
 
+def split_dic(re_list):
+    #返回排好序的长key字典的同时改变原来的字典(去掉那些长key的项)
+    long_key = {}
+    #把key大于1字符的项分到long_key
+    for key, _ in re_list.items():
+        if len(key) > 1:
+            long_key[key] = re_list[key]
+
+    #删除re_list中的
+    for key, _ in long_key.items():
+        del re_list[key]
+    #返回排好序的长keydict
+    return dict(sorted(long_key.items(), key=lambda d: len(d[0]), reverse=True))
 
 class MyWidget(QSystemTrayIcon):
     #注册表中un_valid为0则停用全局禁止，为1则启用
@@ -155,13 +168,23 @@ class MyWidget(QSystemTrayIcon):
                 if "," in self.re_list:
                     processed = re.sub(", +",",",processed)
 
-                #处理整个对话框列表的问题
+                #先处理对话框列表中的长key字典
+                order_longkeydic = split_dic(self.re_list)
+                for key, value in order_longkeydic.items():
+                    if key in processed:
+                        result_text = processed.replace(key,value)
+                        comparison[key] = value
+                    else:
+                        result_text = processed
+
+                #处理整个对话框列表的单字符key字典
                 for x in list(processed):
                     if x in self.re_list:
-                        result_text+=self.re_list[x]
-                        comparison[x]=self.re_list[x]
+                        result_text += self.re_list[x]
+                        comparison[x] = self.re_list[x]
                     else:
-                        result_text+=x
+                        result_text += x
+
                 self.last_text = result_text
 
                 if text != result_text:#字符有替换或编码有调整
